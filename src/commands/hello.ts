@@ -1,6 +1,7 @@
-import {Command, flags} from '@oclif/command'
+import {flags} from '@oclif/command'
+import Base from '../base'
 
-export default class Hello extends Command {
+export default class Hello extends Base {
   static description = 'describe the command here'
 
   static examples = [
@@ -10,6 +11,7 @@ hello world from ./src/hello.ts!
   ]
 
   static flags = {
+    ...Base.flags,
     help: flags.help({char: 'h'}),
     // flag with a value (-n, --name=VALUE)
     name: flags.string({char: 'n', description: 'name to print'}),
@@ -27,5 +29,7 @@ hello world from ./src/hello.ts!
     if (args.file && flags.force) {
       this.log(`you input --force and --file: ${args.file}`)
     }
+    // eslint-disable-next-line no-console
+    console.dir(this.people, {depth: null})
   }
 }
