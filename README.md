@@ -31,6 +31,7 @@ USAGE
 * [`netvissoc hello [FILE]`](#netvissoc-hello-file)
 * [`netvissoc help [COMMAND]`](#netvissoc-help-command)
 * [`netvissoc list`](#netvissoc-list)
+* [`netvissoc remove NAME`](#netvissoc-remove-name)
 * [`netvissoc rename OLD NEW`](#netvissoc-rename-old-new)
 
 ## `netvissoc hello [FILE]`
@@ -94,6 +95,25 @@ OPTIONS
 ```
 
 _See code: [src/commands/list.ts](https://github.com/Coreball/netvissoc/blob/v0.0.0/src/commands/list.ts)_
+
+## `netvissoc remove NAME`
+
+remove all occurrences of name and delete corresponding file
+
+```
+USAGE
+  $ netvissoc remove NAME
+
+ARGUMENTS
+  NAME  name to be deleted
+
+OPTIONS
+  -h, --help           show CLI help
+  -i, --input=input    [default: .] input directory
+  -o, --output=output  [default: .] output directory
+```
+
+_See code: [src/commands/remove.ts](https://github.com/Coreball/netvissoc/blob/v0.0.0/src/commands/remove.ts)_
 
 ## `netvissoc rename OLD NEW`
 

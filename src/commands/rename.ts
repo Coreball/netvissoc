@@ -1,4 +1,5 @@
 import {flags} from '@oclif/command'
+import * as path from 'path'
 import Base from '../base'
 import {Person, Connection} from '../defs'
 
@@ -73,5 +74,8 @@ export default class Rename extends Base {
     const {args} = this.parse(Rename)
     this.rename(args.old, args.new)
     this.save(this.outputDir)
+    if (path.normalize(this.inputDir) === path.normalize(this.outputDir)) {
+      this.removeFile(this.inputDir, args.old)
+    }
   }
 }

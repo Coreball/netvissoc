@@ -32,8 +32,15 @@ export default abstract class Base extends Command {
     if (!fs.existsSync(dir))
       fs.mkdirSync(dir, {recursive: true})
     this.people.forEach(person =>
-      fs.writeFileSync(path.join(dir, person.name.replace(' ', '_') + '.json'),
-        JSON.stringify(person, null, 4)))
+      fs.writeFileSync(this.pathName(dir, person.name), JSON.stringify(person, null, 4)))
+  }
+
+  removeFile(dir: string, name: string) {
+    fs.unlinkSync(this.pathName(dir, name))
+  }
+
+  pathName(dir: string, name: string) {
+    return path.join(dir, name.replace(' ', '_') + '.json')
   }
 
   async init() {
