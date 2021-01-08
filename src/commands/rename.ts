@@ -72,5 +72,6 @@ export default class Rename extends Base {
   async run() {
     const {args} = this.parse(Rename)
     this.rename(args.old, args.new)
+    this.save(this.outputDir)
   }
 }
