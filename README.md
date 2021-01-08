@@ -31,6 +31,7 @@ USAGE
 * [`netvissoc hello [FILE]`](#netvissoc-hello-file)
 * [`netvissoc help [COMMAND]`](#netvissoc-help-command)
 * [`netvissoc list`](#netvissoc-list)
+* [`netvissoc rename OLD NEW`](#netvissoc-rename-old-new)
 
 ## `netvissoc hello [FILE]`
 
@@ -93,4 +94,24 @@ OPTIONS
 ```
 
 _See code: [src/commands/list.ts](https://github.com/Coreball/netvissoc/blob/v0.0.0/src/commands/list.ts)_
+
+## `netvissoc rename OLD NEW`
+
+rename a node
+
+```
+USAGE
+  $ netvissoc rename OLD NEW
+
+ARGUMENTS
+  OLD  old name
+  NEW  new name
+
+OPTIONS
+  -h, --help           show CLI help
+  -i, --input=input    [default: .] input directory
+  -o, --output=output  [default: .] output directory
+```
+
+_See code: [src/commands/rename.ts](https://github.com/Coreball/netvissoc/blob/v0.0.0/src/commands/rename.ts)_
 <!-- commandsstop -->
