@@ -5,7 +5,7 @@ import * as path from 'path'
 import {Person} from './defs'
 
 export default abstract class Base extends Command {
-  static flags = {
+  static flags: flags.Input<any> = {
     input: flags.string({
       char: 'i',
       description: 'input directory',
