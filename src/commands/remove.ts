@@ -1,5 +1,4 @@
-import {flags} from '@oclif/command'
-import * as path from 'path'
+import { flags } from '@oclif/command'
 import Base from '../base'
 
 export default class Remove extends Base {
@@ -7,11 +6,11 @@ export default class Remove extends Base {
 
   static flags = {
     ...Base.flags,
-    help: flags.help({char: 'h'}),
+    help: flags.help({ char: 'h' }),
   }
 
   static args = [
-    {name: 'name', required: true, description: 'name to be deleted'},
+    { name: 'name', required: true, description: 'name to be deleted' },
   ]
 
   remove(name: string) {
@@ -23,10 +22,10 @@ export default class Remove extends Base {
   }
 
   async run() {
-    const {args} = this.parse(Remove)
+    const { args } = this.parse(Remove)
     this.remove(args.name)
     this.save(this.outputDir)
-    if (path.normalize(this.inputDir) === path.normalize(this.outputDir)) {
+    if (this.areDirsSame(this.inputDir, this.outputDir)) {
       this.removeFile(this.inputDir, args.name)
     }
   }

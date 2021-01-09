@@ -1,19 +1,18 @@
-import {flags} from '@oclif/command'
-import * as path from 'path'
+import { flags } from '@oclif/command'
 import Base from '../base'
-import {Person, Connection} from '../defs'
+import { Person, Connection } from '../defs'
 
 export default class Rename extends Base {
   static description = 'rename a node'
 
   static flags = {
     ...Base.flags,
-    help: flags.help({char: 'h'}),
+    help: flags.help({ char: 'h' }),
   }
 
   static args = [
-    {name: 'old', required: true, description: 'old name'},
-    {name: 'new', required: true, description: 'new name'},
+    { name: 'old', required: true, description: 'old name' },
+    { name: 'new', required: true, description: 'new name' },
   ]
 
   rename(oldName: string, newName: string) {
@@ -49,7 +48,9 @@ export default class Rename extends Base {
     newConn.relations = oldConn.relations.reduce((acc, curr) => {
       const existingRelation = acc.find(rel => rel.type === curr.type)
       if (existingRelation) {
-        existingRelation.notes += '\n' + curr.notes
+        if (curr.notes) {
+          existingRelation.notes += '\n' + curr.notes
+        }
         return acc
       }
       return [...acc, curr]
@@ -71,10 +72,10 @@ export default class Rename extends Base {
   }
 
   async run() {
-    const {args} = this.parse(Rename)
+    const { args } = this.parse(Rename)
     this.rename(args.old, args.new)
     this.save(this.outputDir)
-    if (path.normalize(this.inputDir) === path.normalize(this.outputDir)) {
+    if (this.areDirsSame(this.inputDir, this.outputDir)) {
       this.removeFile(this.inputDir, args.old)
     }
   }

@@ -1,8 +1,8 @@
-import {Command, flags} from '@oclif/command'
-import {Input} from '@oclif/parser'
+import { Command, flags } from '@oclif/command'
+import { Input } from '@oclif/parser'
 import * as fs from 'fs'
 import * as path from 'path'
-import {Person} from './defs'
+import { Person } from './defs'
 
 export default abstract class Base extends Command {
   static flags: flags.Input<any> = {
@@ -29,10 +29,12 @@ export default abstract class Base extends Command {
   }
 
   save(dir: string) {
-    if (!fs.existsSync(dir))
-      fs.mkdirSync(dir, {recursive: true})
-    this.people.forEach(person =>
-      fs.writeFileSync(this.pathName(dir, person.name), JSON.stringify(person, null, 4)))
+    if (!fs.existsSync(dir)) {
+      fs.mkdirSync(dir, { recursive: true })
+    }
+    this.people.forEach(person => {
+      fs.writeFileSync(this.pathName(dir, person.name), JSON.stringify(person, null, 4))
+    })
   }
 
   removeFile(dir: string, name: string) {
@@ -43,8 +45,12 @@ export default abstract class Base extends Command {
     return path.join(dir, name.replace(' ', '_') + '.json')
   }
 
+  areDirsSame(a: string, b: string) {
+    return path.normalize(a) === path.normalize(b)
+  }
+
   async init() {
-    const {flags} = this.parse(this.constructor as Input<typeof Base.flags>)
+    const { flags } = this.parse(this.constructor as Input<typeof Base.flags>)
     this.inputDir = flags.input.toString()
     this.outputDir = flags.output.toString()
     try {

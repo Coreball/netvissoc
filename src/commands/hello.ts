@@ -1,4 +1,4 @@
-import {flags} from '@oclif/command'
+import { flags } from '@oclif/command'
 import Base from '../base'
 
 export default class Hello extends Base {
@@ -12,17 +12,17 @@ hello world from ./src/hello.ts!
 
   static flags = {
     ...Base.flags,
-    help: flags.help({char: 'h'}),
+    help: flags.help({ char: 'h' }),
     // flag with a value (-n, --name=VALUE)
-    name: flags.string({char: 'n', description: 'name to print'}),
+    name: flags.string({ char: 'n', description: 'name to print' }),
     // flag with no value (-f, --force)
-    force: flags.boolean({char: 'f'}),
+    force: flags.boolean({ char: 'f' }),
   }
 
-  static args = [{name: 'file'}]
+  static args = [{ name: 'file' }]
 
   async run() {
-    const {args, flags} = this.parse(Hello)
+    const { args, flags } = this.parse(Hello)
 
     const name = flags.name ?? 'world'
     this.log(`hello ${name} from ./src/commands/hello.ts`)
@@ -30,6 +30,6 @@ hello world from ./src/hello.ts!
       this.log(`you input --force and --file: ${args.file}`)
     }
     // eslint-disable-next-line no-console
-    console.dir(this.people, {depth: null})
+    console.dir(this.people, { depth: null })
   }
 }

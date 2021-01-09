@@ -1,7 +1,7 @@
-import {flags} from '@oclif/command'
-import {cli} from 'cli-ux'
+import { flags } from '@oclif/command'
+import { cli } from 'cli-ux'
 import Base from '../base'
-import {Person} from '../defs'
+import { Person } from '../defs'
 
 export default class List extends Base {
   static description = 'list nodes and number of connections (extended)'
@@ -9,7 +9,7 @@ export default class List extends Base {
   static flags = {
     ...Base.flags,
     ...cli.table.flags(), // Note: --output from cli.table overrides --output from base command
-    help: flags.help({char: 'h'}),
+    help: flags.help({ char: 'h' }),
   }
 
   uniqueRelations(people: Person[]): Set<string> {
@@ -32,11 +32,11 @@ export default class List extends Base {
             relation.type === relationType)
         ).length,
       },
-    })).reduce((acc, curr) => ({...acc, ...curr}), {})
+    })).reduce((acc, curr) => ({ ...acc, ...curr }), {})
   }
 
   async run() {
-    const {flags} = this.parse(List)
+    const { flags } = this.parse(List)
     cli.table(this.people, {
       name: {},
       notes: {
