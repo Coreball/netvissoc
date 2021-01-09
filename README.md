@@ -28,11 +28,32 @@ USAGE
 <!-- usagestop -->
 # Commands
 <!-- commands -->
+* [`netvissoc add NAME`](#netvissoc-add-name)
 * [`netvissoc hello [FILE]`](#netvissoc-hello-file)
 * [`netvissoc help [COMMAND]`](#netvissoc-help-command)
 * [`netvissoc list`](#netvissoc-list)
 * [`netvissoc remove NAME`](#netvissoc-remove-name)
 * [`netvissoc rename OLD NEW`](#netvissoc-rename-old-new)
+
+## `netvissoc add NAME`
+
+add a new node without connections
+
+```
+USAGE
+  $ netvissoc add NAME
+
+ARGUMENTS
+  NAME  name to be added
+
+OPTIONS
+  -h, --help           show CLI help
+  -i, --input=input    [default: .] input directory
+  -n, --notes=notes    optional notes
+  -o, --output=output  [default: .] output directory
+```
+
+_See code: [src/commands/add.ts](https://github.com/Coreball/netvissoc/blob/v0.0.0/src/commands/add.ts)_
 
 ## `netvissoc hello [FILE]`
 
