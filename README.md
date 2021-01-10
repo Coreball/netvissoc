@@ -29,6 +29,7 @@ USAGE
 # Commands
 <!-- commands -->
 * [`netvissoc add NAME`](#netvissoc-add-name)
+* [`netvissoc check`](#netvissoc-check)
 * [`netvissoc hello [FILE]`](#netvissoc-hello-file)
 * [`netvissoc help [COMMAND]`](#netvissoc-help-command)
 * [`netvissoc list`](#netvissoc-list)
@@ -54,6 +55,21 @@ OPTIONS
 ```
 
 _See code: [src/commands/add.ts](https://github.com/Coreball/netvissoc/blob/v0.0.0/src/commands/add.ts)_
+
+## `netvissoc check`
+
+check for and display potential problems with input files
+
+```
+USAGE
+  $ netvissoc check
+
+OPTIONS
+  -h, --help         show CLI help
+  -i, --input=input  [default: .] input directory
+```
+
+_See code: [src/commands/check.ts](https://github.com/Coreball/netvissoc/blob/v0.0.0/src/commands/check.ts)_
 
 ## `netvissoc hello [FILE]`
 
