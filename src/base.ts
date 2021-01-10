@@ -5,17 +5,17 @@ import * as path from 'path'
 import { Person } from './defs'
 
 export default abstract class Base extends Command {
+  static inputFlag = {
+    input: flags.string({ char: 'i', description: 'input directory', default: '.' }),
+  }
+
+  static outputFlag = {
+    output: flags.string({ char: 'o', description: 'output directory', default: '.' }),
+  }
+
   static flags: flags.Input<any> = {
-    input: flags.string({
-      char: 'i',
-      description: 'input directory',
-      default: '.',
-    }),
-    output: flags.string({
-      char: 'o',
-      description: 'output directory',
-      default: '.',
-    }),
+    ...Base.inputFlag,
+    ...Base.outputFlag,
   }
 
   inputDir!: string;
@@ -51,8 +51,8 @@ export default abstract class Base extends Command {
 
   async init() {
     const { flags } = this.parse(this.constructor as Input<typeof Base.flags>)
-    this.inputDir = flags.input.toString()
-    this.outputDir = flags.output.toString()
+    this.inputDir = flags.input?.toString()
+    this.outputDir = flags.output?.toString() // output flag not required in some sub-commands
     try {
       this.load(this.inputDir)
     } catch (error) {

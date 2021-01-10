@@ -7,7 +7,7 @@ export default class List extends Base {
   static description = 'list nodes and number of connections (extended)'
 
   static flags = {
-    ...Base.flags,
+    ...Base.inputFlag,
     ...cli.table.flags(), // Note: --output from cli.table overrides --output from base command
     help: flags.help({ char: 'h' }),
   }
