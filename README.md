@@ -36,6 +36,7 @@ USAGE
 * [`netvissoc list`](#netvissoc-list)
 * [`netvissoc remove NAME`](#netvissoc-remove-name)
 * [`netvissoc rename OLD NEW`](#netvissoc-rename-old-new)
+* [`netvissoc unlink FROM TO TYPE`](#netvissoc-unlink-from-to-type)
 
 ## `netvissoc add NAME`
 
@@ -195,4 +196,26 @@ OPTIONS
 ```
 
 _See code: [src/commands/rename.ts](https://github.com/Coreball/netvissoc/blob/v0.0.0/src/commands/rename.ts)_
+
+## `netvissoc unlink FROM TO TYPE`
+
+remove a relation between nodes
+
+```
+USAGE
+  $ netvissoc unlink FROM TO TYPE
+
+ARGUMENTS
+  FROM  starting node
+  TO    ending node
+  TYPE  relation type
+
+OPTIONS
+  -h, --help           show CLI help
+  -i, --input=input    [default: .] input directory
+  -o, --output=output  [default: .] output directory
+  -u, --undirected     remove edges both ways (if exist)
+```
+
+_See code: [src/commands/unlink.ts](https://github.com/Coreball/netvissoc/blob/v0.0.0/src/commands/unlink.ts)_
 <!-- commandsstop -->
