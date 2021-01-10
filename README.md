@@ -32,6 +32,7 @@ USAGE
 * [`netvissoc check`](#netvissoc-check)
 * [`netvissoc hello [FILE]`](#netvissoc-hello-file)
 * [`netvissoc help [COMMAND]`](#netvissoc-help-command)
+* [`netvissoc link FROM TO TYPE`](#netvissoc-link-from-to-type)
 * [`netvissoc list`](#netvissoc-list)
 * [`netvissoc remove NAME`](#netvissoc-remove-name)
 * [`netvissoc rename OLD NEW`](#netvissoc-rename-old-new)
@@ -109,6 +110,29 @@ OPTIONS
 ```
 
 _See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v3.2.1/src/commands/help.ts)_
+
+## `netvissoc link FROM TO TYPE`
+
+create a new relation between nodes
+
+```
+USAGE
+  $ netvissoc link FROM TO TYPE
+
+ARGUMENTS
+  FROM  starting node
+  TO    ending node
+  TYPE  relation type
+
+OPTIONS
+  -h, --help           show CLI help
+  -i, --input=input    [default: .] input directory
+  -n, --notes=notes    relation notes
+  -o, --output=output  [default: .] output directory
+  -u, --undirected     make edges both ways
+```
+
+_See code: [src/commands/link.ts](https://github.com/Coreball/netvissoc/blob/v0.0.0/src/commands/link.ts)_
 
 ## `netvissoc list`
 
