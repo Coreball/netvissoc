@@ -4,6 +4,10 @@ import Base from '../base'
 export default class Unlink extends Base {
   static description = 'remove a relation between nodes'
 
+  static examples = [
+    '$ netvissoc unlink -i ./test -o ./test "Zachry" "Meronym" "enemy"',
+  ]
+
   static flags = {
     ...Base.flags,
     help: flags.help({ char: 'h' }),

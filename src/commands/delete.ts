@@ -1,8 +1,12 @@
 import { flags } from '@oclif/command'
 import Base from '../base'
 
-export default class Remove extends Base {
+export default class Delete extends Base {
   static description = 'remove all occurrences of name and delete corresponding file'
+
+  static examples = [
+    '$ netvissoc delete -i ./test -o ./test "Bill Smoke"',
+  ]
 
   static flags = {
     ...Base.flags,
@@ -22,7 +26,7 @@ export default class Remove extends Base {
   }
 
   async run() {
-    const { args } = this.parse(Remove)
+    const { args } = this.parse(Delete)
     this.remove(args.name)
     this.save(this.outputDir)
     if (this.areDirsSame(this.inputDir, this.outputDir)) {

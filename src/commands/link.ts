@@ -4,6 +4,10 @@ import Base from '../base'
 export default class Link extends Base {
   static description = 'create a new relation between nodes'
 
+  static examples = [
+    '$ netvissoc link -i ./test -o ./test "Timothy Cavendish" "Denholme Cavendish" "brother" -u',
+  ]
+
   static flags = {
     ...Base.flags,
     help: flags.help({ char: 'h' }),

@@ -5,6 +5,11 @@ import { Relation } from '../defs'
 export default class Relink extends Base {
   static description = 'change or update a relation between nodes'
 
+  static examples = [
+    '$ netvissoc relink -i ./test -o ./test "Robert Frobisher" "Vyvyan Ayrs" "music buddy" "music enemy" -u',
+    '$ netvissoc relink -i ./test -o ./test "Luisa Rey" "Rufus Sixsmith" "friend" -n "updated notes"',
+  ]
+
   static flags = {
     ...Base.flags,
     help: flags.help({ char: 'h' }),

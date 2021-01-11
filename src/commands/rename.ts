@@ -5,6 +5,10 @@ import { Person, Connection } from '../defs'
 export default class Rename extends Base {
   static description = 'rename a node'
 
+  static examples = [
+    '$ netvissoc rename -i ./test -o ./test "Sonmi" "Sonmi-451"',
+  ]
+
   static flags = {
     ...Base.flags,
     help: flags.help({ char: 'h' }),

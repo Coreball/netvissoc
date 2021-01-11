@@ -4,6 +4,10 @@ import Base from '../base'
 export default class Check extends Base {
   static description = 'check for and display potential problems with input files'
 
+  static examples = [
+    '$ netvissoc check -i ./test',
+  ]
+
   static flags = {
     ...Base.inputFlag,
     help: flags.help({ char: 'h' }),

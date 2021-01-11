@@ -30,12 +30,11 @@ USAGE
 <!-- commands -->
 * [`netvissoc add NAME`](#netvissoc-add-name)
 * [`netvissoc check`](#netvissoc-check)
-* [`netvissoc hello [FILE]`](#netvissoc-hello-file)
+* [`netvissoc delete NAME`](#netvissoc-delete-name)
 * [`netvissoc help [COMMAND]`](#netvissoc-help-command)
 * [`netvissoc link FROM TO TYPE`](#netvissoc-link-from-to-type)
 * [`netvissoc list`](#netvissoc-list)
 * [`netvissoc relink FROM TO OLD [NEW]`](#netvissoc-relink-from-to-old-new)
-* [`netvissoc remove NAME`](#netvissoc-remove-name)
 * [`netvissoc rename OLD NEW`](#netvissoc-rename-old-new)
 * [`netvissoc unlink FROM TO TYPE`](#netvissoc-unlink-from-to-type)
 
@@ -55,6 +54,9 @@ OPTIONS
   -i, --input=input    [default: .] input directory
   -n, --notes=notes    optional notes
   -o, --output=output  [default: .] output directory
+
+EXAMPLE
+  $ netvissoc add -i ./test -o ./test "Adam Ewing" -n "An American lawyer from San Francisco"
 ```
 
 _See code: [src/commands/add.ts](https://github.com/Coreball/netvissoc/blob/v0.0.0/src/commands/add.ts)_
@@ -70,31 +72,34 @@ USAGE
 OPTIONS
   -h, --help         show CLI help
   -i, --input=input  [default: .] input directory
+
+EXAMPLE
+  $ netvissoc check -i ./test
 ```
 
 _See code: [src/commands/check.ts](https://github.com/Coreball/netvissoc/blob/v0.0.0/src/commands/check.ts)_
 
-## `netvissoc hello [FILE]`
+## `netvissoc delete NAME`
 
-describe the command here
+remove all occurrences of name and delete corresponding file
 
 ```
 USAGE
-  $ netvissoc hello [FILE]
+  $ netvissoc delete NAME
+
+ARGUMENTS
+  NAME  name to be deleted
 
 OPTIONS
-  -f, --force
   -h, --help           show CLI help
   -i, --input=input    [default: .] input directory
-  -n, --name=name      name to print
   -o, --output=output  [default: .] output directory
 
 EXAMPLE
-  $ netvissoc hello
-  hello world from ./src/hello.ts!
+  $ netvissoc delete -i ./test -o ./test "Bill Smoke"
 ```
 
-_See code: [src/commands/hello.ts](https://github.com/Coreball/netvissoc/blob/v0.0.0/src/commands/hello.ts)_
+_See code: [src/commands/delete.ts](https://github.com/Coreball/netvissoc/blob/v0.0.0/src/commands/delete.ts)_
 
 ## `netvissoc help [COMMAND]`
 
@@ -132,6 +137,9 @@ OPTIONS
   -n, --notes=notes    relation notes
   -o, --output=output  [default: .] output directory
   -u, --undirected     make edges both ways
+
+EXAMPLE
+  $ netvissoc link -i ./test -o ./test "Timothy Cavendish" "Denholme Cavendish" "brother" -u
 ```
 
 _See code: [src/commands/link.ts](https://github.com/Coreball/netvissoc/blob/v0.0.0/src/commands/link.ts)_
@@ -155,6 +163,9 @@ OPTIONS
   --no-truncate           do not truncate output to fit screen
   --output=csv|json|yaml  output in a more machine friendly format
   --sort=sort             property to sort by (prepend '-' for descending)
+
+EXAMPLE
+  $ netvissoc list -i ./test -x
 ```
 
 _See code: [src/commands/list.ts](https://github.com/Coreball/netvissoc/blob/v0.0.0/src/commands/list.ts)_
@@ -179,28 +190,13 @@ OPTIONS
   -n, --notes=notes    updated relation notes
   -o, --output=output  [default: .] output directory
   -u, --undirected     change edges both ways
+
+EXAMPLES
+  $ netvissoc relink -i ./test -o ./test "Robert Frobisher" "Vyvyan Ayrs" "music buddy" "music enemy" -u
+  $ netvissoc relink -i ./test -o ./test "Luisa Rey" "Rufus Sixsmith" "friend" -n "updated notes"
 ```
 
 _See code: [src/commands/relink.ts](https://github.com/Coreball/netvissoc/blob/v0.0.0/src/commands/relink.ts)_
-
-## `netvissoc remove NAME`
-
-remove all occurrences of name and delete corresponding file
-
-```
-USAGE
-  $ netvissoc remove NAME
-
-ARGUMENTS
-  NAME  name to be deleted
-
-OPTIONS
-  -h, --help           show CLI help
-  -i, --input=input    [default: .] input directory
-  -o, --output=output  [default: .] output directory
-```
-
-_See code: [src/commands/remove.ts](https://github.com/Coreball/netvissoc/blob/v0.0.0/src/commands/remove.ts)_
 
 ## `netvissoc rename OLD NEW`
 
@@ -218,6 +214,9 @@ OPTIONS
   -h, --help           show CLI help
   -i, --input=input    [default: .] input directory
   -o, --output=output  [default: .] output directory
+
+EXAMPLE
+  $ netvissoc rename -i ./test -o ./test "Sonmi" "Sonmi-451"
 ```
 
 _See code: [src/commands/rename.ts](https://github.com/Coreball/netvissoc/blob/v0.0.0/src/commands/rename.ts)_
@@ -240,6 +239,9 @@ OPTIONS
   -i, --input=input    [default: .] input directory
   -o, --output=output  [default: .] output directory
   -u, --undirected     remove edges both ways (if exist)
+
+EXAMPLE
+  $ netvissoc unlink -i ./test -o ./test "Zachry" "Meronym" "enemy"
 ```
 
 _See code: [src/commands/unlink.ts](https://github.com/Coreball/netvissoc/blob/v0.0.0/src/commands/unlink.ts)_

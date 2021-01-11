@@ -6,6 +6,10 @@ import { Person } from '../defs'
 export default class List extends Base {
   static description = 'list nodes and number of connections (extended)'
 
+  static examples = [
+    '$ netvissoc list -i ./test -x',
+  ]
+
   static flags = {
     ...Base.inputFlag,
     ...cli.table.flags(), // Note: --output from cli.table overrides --output from base command

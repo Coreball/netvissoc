@@ -4,6 +4,10 @@ import Base from '../base'
 export default class Add extends Base {
   static description = 'add a new node without connections'
 
+  static examples = [
+    '$ netvissoc add -i ./test -o ./test "Adam Ewing" -n "An American lawyer from San Francisco"',
+  ]
+
   static flags = {
     ...Base.flags,
     help: flags.help({ char: 'h' }),
