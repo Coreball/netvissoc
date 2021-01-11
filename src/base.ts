@@ -49,6 +49,14 @@ export default abstract class Base extends Command {
     return path.normalize(a) === path.normalize(b)
   }
 
+  checkNamesExist(...names: string[]) {
+    names.forEach(name => {
+      if (!this.people.some(person => person.name === name)) {
+        this.error(`Did not find ${name} in the list of nodes`)
+      }
+    })
+  }
+
   async init() {
     const { flags } = this.parse(this.constructor as Input<typeof Base.flags>)
     this.inputDir = flags.input?.toString()

@@ -18,17 +18,12 @@ export default class Link extends Base {
   ]
 
   link(from: string, to: string, type: string, notes?: string) {
+    this.checkNamesExist(from, to)
     // Later: resolve missing nodes automatically/with flag?
-    const fromPerson = this.people.find(person => person.name === from)
-    if (!fromPerson) {
-      this.error(`Did not find ${from} in the list of nodes`)
-    }
-    if (!this.people.some(person => person.name === to)) {
-      this.error(`Did not find ${to} in the list of nodes`)
-    }
     if (from === to) {
       this.warn(`Creating a relation from ${from} to ${to}`)
     }
+    const fromPerson = this.people.find(person => person.name === from)!
     const existingConnection = fromPerson.connections.find(connection => connection.name === to)
     if (existingConnection) {
       if (existingConnection.relations.some(relation => relation.type === type)) {

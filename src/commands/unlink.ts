@@ -16,20 +16,11 @@ export default class Unlink extends Base {
     { name: 'type', required: true, description: 'relation type' },
   ]
 
-  checkLinkageExists(from: string, to: string) {
-    if (!this.people.some(person => person.name === from)) {
-      this.error(`Did not find ${from} in the list of nodes`)
-    }
-    if (!this.people.some(person => person.name === to)) {
-      this.error(`Did not find ${to} in the list of nodes`)
-    }
+  unlink(from: string, to: string, type: string) {
+    this.checkNamesExist(from, to)
     if (from === to) {
       this.warn(`Removing a relation from ${from} to ${to}`)
     }
-  }
-
-  unlink(from: string, to: string, type: string) {
-    this.checkLinkageExists(from, to)
     const fromPerson = this.people.find(person => person.name === from)!
     const existingConnection = fromPerson.connections.find(connection => connection.name === to)
     if (!existingConnection || !existingConnection.relations.some(relation => relation.type === type)) {
