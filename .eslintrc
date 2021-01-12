@@ -6,6 +6,6 @@
   "rules": {
     "lines-between-class-members": ["error", "always", { "exceptAfterSingleLine": true }],
     "object-curly-spacing": ["warn", "always"],
-    "unicorn/no-abusive-eslint-disable": "off"
+    "indent": ["error", 2, { "MemberExpression": 1 }]
   }
 }

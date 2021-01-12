@@ -3,10 +3,15 @@
   <head>
     <title>netvissoc</title>
     <meta charset="utf-8">
+    <link rel="stylesheet" href="vis.css">
+    <script src="https://d3js.org/d3.v6.min.js" defer></script>
     <script src="vis.js" defer></script>
   </head>
   <body>
-    <h1>netvissoc</h1>
-    <input id="fileSelect" type="file" accept="application/json" multiple>
+    <div class="high">
+      <h1>netvissoc</h1>
+      <input id="fileSelect" type="file" accept="application/json" multiple>
+    </div>
+    <svg id="visArea"></svg>
   </body>
 </html>

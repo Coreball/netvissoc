@@ -1,0 +1,13 @@
+#visArea {
+  width: 100%;
+  height: 100%;
+}
+
+.high {
+  position: absolute;
+  z-index: 1;
+}
+
+html, body {
+  height: 100%;
+}
