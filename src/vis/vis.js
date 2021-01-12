@@ -1,7 +1,11 @@
-const cool = this.document.getElementById('cool')
+const fileSelect = this.document.querySelector('#fileSelect')
 
-function test() {
-  cool.innerHTML = 'CLICK'
+async function loadFiles(fileList) {
+  const files = [...fileList]
+  const filesText = await Promise.all(files.map(file => file.text()))
+  const filesJson = filesText.map(file => JSON.parse(file))
+  // eslint-disable-next-line no-console
+  console.log(filesJson)
 }
 
-cool.addEventListener('click', test)
+fileSelect.addEventListener('change', () => loadFiles(fileSelect.files))
