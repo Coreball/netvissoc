@@ -31,6 +31,7 @@ USAGE
 * [`netvissoc add NAME`](#netvissoc-add-name)
 * [`netvissoc check`](#netvissoc-check)
 * [`netvissoc delete NAME`](#netvissoc-delete-name)
+* [`netvissoc graph`](#netvissoc-graph)
 * [`netvissoc help [COMMAND]`](#netvissoc-help-command)
 * [`netvissoc link FROM TO TYPE`](#netvissoc-link-from-to-type)
 * [`netvissoc list`](#netvissoc-list)
@@ -100,6 +101,20 @@ EXAMPLE
 ```
 
 _See code: [src/commands/delete.ts](https://github.com/Coreball/netvissoc/blob/v0.0.0/src/commands/delete.ts)_
+
+## `netvissoc graph`
+
+open network visualization tool
+
+```
+USAGE
+  $ netvissoc graph
+
+OPTIONS
+  -h, --help  show CLI help
+```
+
+_See code: [src/commands/graph.ts](https://github.com/Coreball/netvissoc/blob/v0.0.0/src/commands/graph.ts)_
 
 ## `netvissoc help [COMMAND]`
 
