@@ -11,7 +11,7 @@ const data = {
 }
 const options = {
   nodes: {
-    shape: 'circle',
+    shape: 'dot',
   },
 }
 const network = new vis.Network(container, data, options)
@@ -20,7 +20,23 @@ function colorType(relationType) {
   return 'grey'
 }
 
-function addToNodes(people) {
+function doubleDirectedToUndirected(edgeList) {
+  const newList = []
+  edgeList.forEach(curr => {
+    const existingEdge = newList.find(edge =>
+      edge.from === curr.to && edge.to === curr.from && edge.type === curr.type)
+    if (existingEdge) {
+      existingEdge.arrows = null
+      existingEdge.title += ' ' + curr.title
+    } else {
+      newList.push(curr)
+    }
+  })
+  return newList
+}
+
+function replaceNodes(people) {
+  nodes.clear()
   nodes.add(people.map(person => ({
     id: person.name,
     label: person.name,
@@ -28,26 +44,29 @@ function addToNodes(people) {
   })))
 }
 
-function addToEdges(people) {
-  edges.add(people.map(person =>
+function replaceEdges(people) {
+  edges.clear()
+  const edgeList = people.map(person =>
     person.connections.map(connection =>
       connection.relations.map(relation => ({
         from: person.name,
         to: connection.name,
         arrows: 'to',
+        type: relation.type,
         color: colorType(relation.type),
         title: relation.notes,
       }))
     ).flat()
-  ).flat())
+  ).flat()
+  edges.add(doubleDirectedToUndirected(edgeList)) // perhaps make it an option
 }
 
 async function loadFiles(fileList) {
   const files = [...fileList]
   const filesText = await Promise.all(files.map(file => file.text()))
   const filesJson = filesText.map(file => JSON.parse(file))
-  addToNodes(filesJson)
-  addToEdges(filesJson)
+  replaceNodes(filesJson)
+  replaceEdges(filesJson)
 }
 
 const fileSelect = this.document.querySelector('#fileSelect')
