@@ -3,6 +3,12 @@
   height: 100%;
 }
 
+#relationsTable {
+  display: none;
+  margin-top: 1em;
+  width: 100%;
+}
+
 .high {
   position: absolute;
   z-index: 1;

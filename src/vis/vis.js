@@ -6,7 +6,7 @@ let people = []
 let relationsConf = {}
 
 // create a network
-const container = this.document.querySelector('#network')
+const container = document.querySelector('#network')
 const data = {
   nodes: nodes,
   edges: edges,
@@ -68,16 +68,37 @@ async function loadFiles(fileList) {
   replaceEdges()
 }
 
-const fileSelect = this.document.querySelector('#fileSelect')
+const fileSelect = document.querySelector('#fileSelect')
 fileSelect.addEventListener('change', () => loadFiles(fileSelect.files))
+
+function updateRelationsTable(table) {
+  if (Object.keys(relationsConf).length > 0) {
+    table.style.display = 'table'
+    while (table.rows.length > 1) {
+      table.deleteRow(-1)
+    }
+    for (const relation of Object.keys(relationsConf)) {
+      const row = table.insertRow()
+      const relationCell = row.insertCell()
+      relationCell.appendChild(document.createTextNode(relation))
+      relationCell.style.color = relationsConf[relation].color
+      const widthCell = row.insertCell()
+      widthCell.appendChild(document.createTextNode(relationsConf[relation].width))
+      widthCell.style.color = relationsConf[relation].color
+    }
+  } else {
+    table.style.display = 'none'
+  }
+}
 
 async function loadConf(conf) {
   const confText = await conf.text()
   relationsConf = JSON.parse(confText)
+  updateRelationsTable(document.querySelector('#relationsTable'))
   if (people) {
     replaceEdges()
   }
 }
 
-const confSelect = this.document.querySelector('#confSelect')
+const confSelect = document.querySelector('#confSelect')
 confSelect.addEventListener('change', () => loadConf(confSelect.files[0]))
