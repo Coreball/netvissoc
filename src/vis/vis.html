@@ -10,7 +10,14 @@
   <body>
     <div class="high">
       <h1>netvissoc</h1>
-      <input id="fileSelect" type="file" accept="application/json" multiple>
+      <div class="setting">
+        <label for="fileSelect">Node JSONs</label>
+        <input id="fileSelect" type="file" accept="application/json" multiple>
+      </div>
+      <div class="setting">
+        <label for="confSelect">Relation Config</label>
+        <input id="confSelect" type="file" accept=".conf">
+      </div>
     </div>
     <div id="network"></div>
   </body>

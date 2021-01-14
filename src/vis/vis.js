@@ -2,6 +2,8 @@
 
 const nodes = new vis.DataSet()
 const edges = new vis.DataSet()
+let people = []
+let relationsConf = {}
 
 // create a network
 const container = this.document.querySelector('#network')
@@ -15,10 +17,6 @@ const options = {
   },
 }
 const network = new vis.Network(container, data, options)
-
-function colorType(relationType) {
-  return 'grey'
-}
 
 function doubleDirectedToUndirected(edgeList) {
   const newList = []
@@ -35,7 +33,7 @@ function doubleDirectedToUndirected(edgeList) {
   return newList
 }
 
-function replaceNodes(people) {
+function replaceNodes() {
   nodes.clear()
   nodes.add(people.map(person => ({
     id: person.name,
@@ -44,7 +42,7 @@ function replaceNodes(people) {
   })))
 }
 
-function replaceEdges(people) {
+function replaceEdges() {
   edges.clear()
   const edgeList = people.map(person =>
     person.connections.map(connection =>
@@ -53,7 +51,8 @@ function replaceEdges(people) {
         to: connection.name,
         arrows: 'to',
         type: relation.type,
-        color: colorType(relation.type),
+        color: relationsConf[relation.type]?.color ?? null,
+        width: relationsConf[relation.type]?.width ?? null,
         title: relation.notes,
       }))
     ).flat()
@@ -64,10 +63,21 @@ function replaceEdges(people) {
 async function loadFiles(fileList) {
   const files = [...fileList]
   const filesText = await Promise.all(files.map(file => file.text()))
-  const filesJson = filesText.map(file => JSON.parse(file))
-  replaceNodes(filesJson)
-  replaceEdges(filesJson)
+  people = filesText.map(file => JSON.parse(file))
+  replaceNodes()
+  replaceEdges()
 }
 
 const fileSelect = this.document.querySelector('#fileSelect')
 fileSelect.addEventListener('change', () => loadFiles(fileSelect.files))
+
+async function loadConf(conf) {
+  const confText = await conf.text()
+  relationsConf = JSON.parse(confText)
+  if (people) {
+    replaceEdges()
+  }
+}
+
+const confSelect = this.document.querySelector('#confSelect')
+confSelect.addEventListener('change', () => loadConf(confSelect.files[0]))
