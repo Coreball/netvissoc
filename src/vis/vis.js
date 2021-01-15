@@ -15,6 +15,13 @@ const options = {
   nodes: {
     shape: 'dot',
   },
+  physics: {
+    barnesHut: {
+      gravitationalConstant: -10000,
+      centralGravity: 2,
+      springConstant: 0.005,
+    },
+  },
 }
 const network = new vis.Network(container, data, options)
 
