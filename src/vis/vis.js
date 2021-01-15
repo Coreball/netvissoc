@@ -5,6 +5,28 @@ const edges = new vis.DataSet()
 let people = []
 let relationsConf = {}
 
+// edge settings
+const smoothEdges = {
+  edges: { smooth: true },
+  physics: {
+    barnesHut: {
+      gravitationalConstant: -10000,
+      centralGravity: 2,
+      springConstant: 0.005,
+    },
+  },
+}
+const straightEdges = {
+  edges: { smooth: false },
+  physics: {
+    barnesHut: {
+      gravitationalConstant: -80000,
+      centralGravity: 2,
+      springConstant: 0.005,
+    },
+  },
+}
+
 // create a network
 const container = document.querySelector('#network')
 const data = {
@@ -15,15 +37,9 @@ const options = {
   nodes: {
     shape: 'dot',
   },
-  physics: {
-    barnesHut: {
-      gravitationalConstant: -10000,
-      centralGravity: 2,
-      springConstant: 0.005,
-    },
-  },
 }
-const network = new vis.Network(container, data, options)
+const defaultOptions = { ...options, ...smoothEdges }
+const network = new vis.Network(container, data, defaultOptions)
 
 function doubleDirectedToUndirected(edgeList) {
   const newList = []
@@ -109,3 +125,8 @@ async function loadConf(conf) {
 
 const confSelect = document.querySelector('#confSelect')
 confSelect.addEventListener('change', () => loadConf(confSelect.files[0]))
+
+const smoothCheck = document.querySelector('#smoothCheck')
+smoothCheck.addEventListener('change', () => {
+  network.setOptions({ ...options, ...(smoothCheck.checked ? smoothEdges : straightEdges) })
+})
