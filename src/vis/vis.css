@@ -10,6 +10,10 @@
   width: 100%;
 }
 
+#info {
+  display: none;
+}
+
 .high {
   position: absolute;
   z-index: 1;
