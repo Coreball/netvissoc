@@ -38,9 +38,9 @@ const options = {
     shape: 'dot',
   },
 }
-const defaultOptions = { ...options, ...smoothEdges }
-const network = new vis.Network(container, data, defaultOptions)
+const network = new vis.Network(container, data, options)
 
+// graph loading
 function doubleDirectedToUndirected(edgeList) {
   const newList = []
   edgeList.forEach(curr => {
@@ -94,6 +94,7 @@ async function loadFiles(fileList) {
 const fileSelect = document.querySelector('#fileSelect')
 fileSelect.addEventListener('change', () => loadFiles(fileSelect.files))
 
+// colors and widths for edges
 function updateRelationsTable(table) {
   if (Object.keys(relationsConf).length > 0) {
     table.style.display = 'table'
@@ -126,7 +127,11 @@ async function loadConf(conf) {
 const confSelect = document.querySelector('#confSelect')
 confSelect.addEventListener('change', () => loadConf(confSelect.files[0]))
 
+// smooth edges
+function enableSmoothEdges(smooth) {
+  network.setOptions({ ...options, ...(smooth ? smoothEdges : straightEdges) })
+}
+
 const smoothCheck = document.querySelector('#smoothCheck')
-smoothCheck.addEventListener('change', () => {
-  network.setOptions({ ...options, ...(smoothCheck.checked ? smoothEdges : straightEdges) })
-})
+smoothCheck.addEventListener('change', () => enableSmoothEdges(smoothCheck.checked))
+enableSmoothEdges(smoothCheck.checked) // for browsers that persist dynamic checked state
