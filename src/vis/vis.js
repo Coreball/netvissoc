@@ -137,35 +137,52 @@ smoothCheck.addEventListener('change', () => enableSmoothEdges(smoothCheck.check
 enableSmoothEdges(smoothCheck.checked) // for browsers that persist dynamic checked state
 
 // info box
-function updateInfo(infoDiv, name) {
-  const person = people.find(person => person.name === name)
-  if (person) {
-    infoDiv.style.display = 'initial'
-    infoDiv.querySelector('.name').textContent = person.name
-    infoDiv.querySelector('.notes').textContent = person.notes
-    const connectionList = infoDiv.querySelector('.connectionList')
-    while (connectionList.firstChild) {
-      connectionList.removeChild(connectionList.firstChild)
+function updateInfoNode(infoDiv, nodeId) {
+  const person = people.find(person => person.name === nodeId)
+  infoDiv.querySelector('.name').textContent = person.name
+  infoDiv.querySelector('.notes').textContent = person.notes
+  const connectionList = infoDiv.querySelector('.connectionList')
+  while (connectionList.firstChild) {
+    connectionList.removeChild(connectionList.firstChild)
+  }
+  person.connections.forEach(connection => {
+    const connectionItem = document.createElement('li')
+    connectionItem.appendChild(document.createTextNode(connection.name))
+    if (connection.relations.length > 0) {
+      const relationList = document.createElement('ul')
+      connection.relations.forEach(relation => {
+        const relationItem = document.createElement('li')
+        const text = relation.type + (relation.notes ? ` - ${relation.notes}` : '')
+        relationItem.appendChild(document.createTextNode(text))
+        relationList.appendChild(relationItem)
+      })
+      connectionItem.appendChild(relationList)
     }
-    person.connections.forEach(connection => {
-      const connectionItem = document.createElement('li')
-      connectionItem.appendChild(document.createTextNode(connection.name))
-      if (connection.relations.length > 0) {
-        const relationList = document.createElement('ul')
-        connection.relations.forEach(relation => {
-          const relationItem = document.createElement('li')
-          const text = relation.type + (relation.notes ? ` - ${relation.notes}` : '')
-          relationItem.appendChild(document.createTextNode(text))
-          relationList.appendChild(relationItem)
-        })
-        connectionItem.appendChild(relationList)
-      }
-      connectionList.appendChild(connectionItem)
-    })
+    connectionList.appendChild(connectionItem)
+  })
+}
+
+function updateInfoEdge(infoDiv, edgeId) {
+  const edge = edges.get(edgeId)
+  infoDiv.querySelector('.name').textContent = edge.type
+  infoDiv.querySelector('.notes').textContent = edge.title
+  const connectionList = infoDiv.querySelector('.connectionList')
+  while (connectionList.firstChild) {
+    connectionList.removeChild(connectionList.firstChild)
+  }
+}
+
+function updateInfo(infoDiv, nodeId, edgeId) {
+  if (nodeId) {
+    updateInfoNode(infoDiv, nodeId)
+    infoDiv.style.display = 'initial'
+  } else if (edgeId) {
+    updateInfoEdge(infoDiv, edgeId)
+    infoDiv.style.display = 'initial'
   } else {
     infoDiv.style.display = 'none'
   }
 }
 
 const info = document.querySelector('#info')
-network.on('click', click => updateInfo(info, click.nodes[0]))
+network.on('click', click => updateInfo(info, click.nodes[0], click.edges[0]))
