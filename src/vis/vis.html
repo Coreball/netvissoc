@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>netvissoc</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="vis.css">
+    <script src="https://unpkg.com/vis-network/standalone/umd/vis-network.min.js" defer></script>
+    <script src="vis.js" defer></script>
+  </head>
+  <body>
+    <div class="high">
+      <h1>netvissoc</h1>
+      <div class="setting">
+        <label for="fileSelect">Node JSONs</label>
+        <input id="fileSelect" type="file" accept="application/json" multiple>
+      </div>
+      <div class="setting">
+        <label for="confSelect">Relation Config</label>
+        <input id="confSelect" type="file" accept=".conf">
+      </div>
+      <table id="relationsTable">
+        <tr>
+          <th>Relation</th>
+          <th>Width</th>
+        </tr>
+      </table>
+      <div class="setting">
+        <label for="smoothCheck">Smooth edges</label>
+        <input id="smoothCheck" type="checkbox" checked>
+      </div>
+      <div id="info">
+        <p class="name"></p>
+        <p class="notes"></p>
+        <ul class="connectionList">
+        </ul>
+      </div>
+    </div>
+    <div id="network"></div>
+  </body>
+</html>

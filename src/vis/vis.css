@@ -1,0 +1,38 @@
+#network {
+  width: 100%;
+  height: 100%;
+}
+
+#relationsTable {
+  display: none;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  width: 100%;
+}
+
+#info {
+  display: none;
+}
+
+.high {
+  position: absolute;
+  z-index: 1;
+  background-color: whitesmoke;
+  margin: 1em;
+  padding: 1em;
+}
+
+.setting {
+  display: flex;
+  justify-content: space-between;
+  gap: 1em;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0%;
+  font-family: sans-serif;
+}
