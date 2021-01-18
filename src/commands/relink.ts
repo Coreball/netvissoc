@@ -3,7 +3,7 @@ import Base from '../base'
 import { Relation } from '../defs'
 
 export default class Relink extends Base {
-  static description = 'change or update a relation between nodes'
+  static description = 'change or update a relation between nodes (every pair if multiple)'
 
   static examples = [
     '$ netvissoc relink -i ./test -o ./test "Robert Frobisher" "Vyvyan Ayrs" "music buddy" "music enemy" -u',
@@ -18,8 +18,8 @@ export default class Relink extends Base {
   }
 
   static args = [
-    { name: 'from', required: true, description: 'starting node' },
-    { name: 'to', required: true, description: 'ending node' },
+    { name: 'from', required: true, description: 'starting node(s), comma-separated' },
+    { name: 'to', required: true, description: 'ending node(s), comma-separated' },
     { name: 'old', required: true, description: 'relation type to change/update' },
     { name: 'new', required: false, description: 'relation type to change to (optional)' },
   ]
@@ -60,18 +60,24 @@ export default class Relink extends Base {
 
   async run() {
     const { args, flags } = this.parse(Relink)
-    if (flags.notes) {
-      this.updateNotes(args.from, args.to, args.old, flags.notes)
-      if (flags.undirected) {
-        this.updateNotes(args.to, args.from, args.old, flags.notes)
-      }
-    }
-    if (args.new) {
-      this.relink(args.from, args.to, args.old, args.new)
-      if (flags.undirected) {
-        this.relink(args.to, args.from, args.old, args.new)
-      }
-    }
+    const froms = this.splitArg(args.from)
+    const tos = this.splitArg(args.to)
+    froms.forEach(from => {
+      tos.forEach(to => {
+        if (flags.notes) {
+          this.updateNotes(from, to, args.old, flags.notes)
+          if (flags.undirected) {
+            this.updateNotes(to, from, args.old, flags.notes)
+          }
+        }
+        if (args.new) {
+          this.relink(from, to, args.old, args.new)
+          if (flags.undirected) {
+            this.relink(to, from, args.old, args.new)
+          }
+        }
+      })
+    })
     this.save(this.outputDir)
   }
 }

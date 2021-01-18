@@ -14,7 +14,7 @@ export default class Delete extends Base {
   }
 
   static args = [
-    { name: 'name', required: true, description: 'name to be deleted' },
+    { name: 'name', required: true, description: 'name(s) to be deleted, comma-separated' },
   ]
 
   remove(name: string) {
@@ -27,10 +27,11 @@ export default class Delete extends Base {
 
   async run() {
     const { args } = this.parse(Delete)
-    this.remove(args.name)
+    const names = this.splitArg(args.name)
+    names.forEach(name => this.remove(name))
     this.save(this.outputDir)
     if (this.areDirsSame(this.inputDir, this.outputDir)) {
-      this.removeFile(this.inputDir, args.name)
+      names.forEach(name => this.removeFile(this.inputDir, name))
     }
   }
 }

@@ -41,11 +41,11 @@ export default abstract class Base extends Command {
     fs.unlinkSync(this.pathName(dir, name))
   }
 
-  pathName(dir: string, name: string) {
+  pathName(dir: string, name: string): string {
     return path.join(dir, name.replace(' ', '_') + '.json')
   }
 
-  areDirsSame(a: string, b: string) {
+  areDirsSame(a: string, b: string): boolean {
     return path.normalize(a) === path.normalize(b)
   }
 
@@ -55,6 +55,10 @@ export default abstract class Base extends Command {
         this.error(`Did not find ${name} in the list of nodes`)
       }
     })
+  }
+
+  splitArg(arg: string): string[] {
+    return arg.split(',').map(s => s.trim())
   }
 
   async init() {

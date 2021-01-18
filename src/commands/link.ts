@@ -2,7 +2,7 @@ import { flags } from '@oclif/command'
 import Base from '../base'
 
 export default class Link extends Base {
-  static description = 'create a new relation between nodes'
+  static description = 'create a new relation between nodes (every pair if multiple)'
 
   static examples = [
     '$ netvissoc link -i ./test -o ./test "Timothy Cavendish" "Denholme Cavendish" "brother" -u',
@@ -16,8 +16,8 @@ export default class Link extends Base {
   }
 
   static args = [
-    { name: 'from', required: true, description: 'starting node' },
-    { name: 'to', required: true, description: 'ending node' },
+    { name: 'from', required: true, description: 'starting node(s), comma-separated' },
+    { name: 'to', required: true, description: 'ending node(s), comma-separated' },
     { name: 'type', required: true, description: 'relation type' },
   ]
 
@@ -46,10 +46,16 @@ export default class Link extends Base {
 
   async run() {
     const { args, flags } = this.parse(Link)
-    this.link(args.from, args.to, args.type, flags.notes)
-    if (flags.undirected) {
-      this.link(args.to, args.from, args.type, flags.notes)
-    }
+    const froms = this.splitArg(args.from)
+    const tos = this.splitArg(args.to)
+    froms.forEach(from => {
+      tos.forEach(to => {
+        this.link(from, to, args.type, flags.notes)
+        if (flags.undirected) {
+          this.link(to, from, args.type, flags.notes)
+        }
+      })
+    })
     this.save(this.outputDir)
   }
 }

@@ -2,7 +2,7 @@ import { flags } from '@oclif/command'
 import Base from '../base'
 
 export default class Unlink extends Base {
-  static description = 'remove a relation between nodes'
+  static description = 'remove a relation between nodes (every pair if multiple)'
 
   static examples = [
     '$ netvissoc unlink -i ./test -o ./test "Zachry" "Meronym" "enemy"',
@@ -15,8 +15,8 @@ export default class Unlink extends Base {
   }
 
   static args = [
-    { name: 'from', required: true, description: 'starting node' },
-    { name: 'to', required: true, description: 'ending node' },
+    { name: 'from', required: true, description: 'starting node(s), comma-separated' },
+    { name: 'to', required: true, description: 'ending node(s), comma-separated' },
     { name: 'type', required: true, description: 'relation type' },
   ]
 
@@ -39,10 +39,16 @@ export default class Unlink extends Base {
 
   async run() {
     const { args, flags } = this.parse(Unlink)
-    this.unlink(args.from, args.to, args.type)
-    if (flags.undirected) {
-      this.unlink(args.to, args.from, args.type)
-    }
+    const froms = this.splitArg(args.from)
+    const tos = this.splitArg(args.to)
+    froms.forEach(from => {
+      tos.forEach(to => {
+        this.unlink(from, to, args.type)
+        if (flags.undirected) {
+          this.unlink(to, from, args.type)
+        }
+      })
+    })
     this.save(this.outputDir)
   }
 }

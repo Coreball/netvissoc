@@ -6,6 +6,7 @@ export default class Add extends Base {
 
   static examples = [
     '$ netvissoc add -i ./test -o ./test "Adam Ewing" -n "An American lawyer from San Francisco"',
+    '$ netvissoc add -i ./test -o ./test "Adam Ewing, Henry Goose',
   ]
 
   static flags = {
@@ -15,7 +16,7 @@ export default class Add extends Base {
   }
 
   static args = [
-    { name: 'name', required: true, description: 'name to be added' },
+    { name: 'name', required: true, description: 'name(s) to be added, comma-separated' },
   ]
 
   add(name: string, notes?: string) {
@@ -31,7 +32,8 @@ export default class Add extends Base {
 
   async run() {
     const { args, flags } = this.parse(Add)
-    this.add(args.name, flags.notes)
+    const names = this.splitArg(args.name)
+    names.forEach(name => this.add(name, flags.notes))
     this.save(this.outputDir)
   }
 }

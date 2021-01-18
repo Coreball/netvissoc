@@ -48,7 +48,7 @@ USAGE
   $ netvissoc add NAME
 
 ARGUMENTS
-  NAME  name to be added
+  NAME  name(s) to be added, comma-separated
 
 OPTIONS
   -h, --help           show CLI help
@@ -56,8 +56,9 @@ OPTIONS
   -n, --notes=notes    optional notes
   -o, --output=output  [default: .] output directory
 
-EXAMPLE
+EXAMPLES
   $ netvissoc add -i ./test -o ./test "Adam Ewing" -n "An American lawyer from San Francisco"
+  $ netvissoc add -i ./test -o ./test "Adam Ewing, Henry Goose
 ```
 
 _See code: [src/commands/add.ts](https://github.com/Coreball/netvissoc/blob/v0.0.0/src/commands/add.ts)_
@@ -89,7 +90,7 @@ USAGE
   $ netvissoc delete NAME
 
 ARGUMENTS
-  NAME  name to be deleted
+  NAME  name(s) to be deleted, comma-separated
 
 OPTIONS
   -h, --help           show CLI help
@@ -135,15 +136,15 @@ _See code: [@oclif/plugin-help](https://github.com/oclif/plugin-help/blob/v3.2.1
 
 ## `netvissoc link FROM TO TYPE`
 
-create a new relation between nodes
+create a new relation between nodes (every pair if multiple)
 
 ```
 USAGE
   $ netvissoc link FROM TO TYPE
 
 ARGUMENTS
-  FROM  starting node
-  TO    ending node
+  FROM  starting node(s), comma-separated
+  TO    ending node(s), comma-separated
   TYPE  relation type
 
 OPTIONS
@@ -187,15 +188,15 @@ _See code: [src/commands/list.ts](https://github.com/Coreball/netvissoc/blob/v0.
 
 ## `netvissoc relink FROM TO OLD [NEW]`
 
-change or update a relation between nodes
+change or update a relation between nodes (every pair if multiple)
 
 ```
 USAGE
   $ netvissoc relink FROM TO OLD [NEW]
 
 ARGUMENTS
-  FROM  starting node
-  TO    ending node
+  FROM  starting node(s), comma-separated
+  TO    ending node(s), comma-separated
   OLD   relation type to change/update
   NEW   relation type to change to (optional)
 
@@ -238,15 +239,15 @@ _See code: [src/commands/rename.ts](https://github.com/Coreball/netvissoc/blob/v
 
 ## `netvissoc unlink FROM TO TYPE`
 
-remove a relation between nodes
+remove a relation between nodes (every pair if multiple)
 
 ```
 USAGE
   $ netvissoc unlink FROM TO TYPE
 
 ARGUMENTS
-  FROM  starting node
-  TO    ending node
+  FROM  starting node(s), comma-separated
+  TO    ending node(s), comma-separated
   TYPE  relation type
 
 OPTIONS
