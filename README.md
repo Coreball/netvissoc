@@ -1,7 +1,9 @@
 netvissoc
 =========
 
+CLI network creation tool and graph visualization for social networks
 
+![screenshot](screenshot-crop.png)
 
 [![oclif](https://img.shields.io/badge/cli-oclif-brightgreen.svg)](https://oclif.io)
 [![Version](https://img.shields.io/npm/v/netvissoc.svg)](https://npmjs.org/package/netvissoc)
@@ -58,7 +60,7 @@ OPTIONS
 
 EXAMPLES
   $ netvissoc add -i ./test -o ./test "Adam Ewing" -n "An American lawyer from San Francisco"
-  $ netvissoc add -i ./test -o ./test "Adam Ewing, Henry Goose
+  $ netvissoc add -i ./test -o ./test "Adam Ewing, Henry Goose"
 ```
 
 _See code: [src/commands/add.ts](https://github.com/Coreball/netvissoc/blob/v0.0.0/src/commands/add.ts)_

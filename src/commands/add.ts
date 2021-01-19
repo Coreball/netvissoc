@@ -6,7 +6,7 @@ export default class Add extends Base {
 
   static examples = [
     '$ netvissoc add -i ./test -o ./test "Adam Ewing" -n "An American lawyer from San Francisco"',
-    '$ netvissoc add -i ./test -o ./test "Adam Ewing, Henry Goose',
+    '$ netvissoc add -i ./test -o ./test "Adam Ewing, Henry Goose"',
   ]
 
   static flags = {
