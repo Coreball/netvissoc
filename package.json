@@ -1,9 +1,9 @@
 {
   "name": "netvissoc",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "author": "Changyuan Lin @Coreball",
   "bin": {
-    "netvissoc": "./bin/run"
+    "netvissoc": "bin/run"
   },
   "bugs": "https://github.com/Coreball/netvissoc/issues",
   "devDependencies": {

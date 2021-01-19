@@ -21,7 +21,7 @@ $ npm install -g netvissoc
 $ netvissoc COMMAND
 running command...
 $ netvissoc (-v|--version|version)
-netvissoc/0.0.0 darwin-x64 node-v15.5.1
+netvissoc/1.0.0 darwin-x64 node-v15.5.1
 $ netvissoc --help [COMMAND]
 USAGE
   $ netvissoc COMMAND
@@ -63,7 +63,7 @@ EXAMPLES
   $ netvissoc add -i ./test -o ./test "Adam Ewing, Henry Goose"
 ```
 
-_See code: [src/commands/add.ts](https://github.com/Coreball/netvissoc/blob/v0.0.0/src/commands/add.ts)_
+_See code: [src/commands/add.ts](https://github.com/Coreball/netvissoc/blob/v1.0.0/src/commands/add.ts)_
 
 ## `netvissoc check`
 
@@ -81,7 +81,7 @@ EXAMPLE
   $ netvissoc check -i ./test
 ```
 
-_See code: [src/commands/check.ts](https://github.com/Coreball/netvissoc/blob/v0.0.0/src/commands/check.ts)_
+_See code: [src/commands/check.ts](https://github.com/Coreball/netvissoc/blob/v1.0.0/src/commands/check.ts)_
 
 ## `netvissoc delete NAME`
 
@@ -103,7 +103,7 @@ EXAMPLE
   $ netvissoc delete -i ./test -o ./test "Bill Smoke"
 ```
 
-_See code: [src/commands/delete.ts](https://github.com/Coreball/netvissoc/blob/v0.0.0/src/commands/delete.ts)_
+_See code: [src/commands/delete.ts](https://github.com/Coreball/netvissoc/blob/v1.0.0/src/commands/delete.ts)_
 
 ## `netvissoc graph`
 
@@ -117,7 +117,7 @@ OPTIONS
   -h, --help  show CLI help
 ```
 
-_See code: [src/commands/graph.ts](https://github.com/Coreball/netvissoc/blob/v0.0.0/src/commands/graph.ts)_
+_See code: [src/commands/graph.ts](https://github.com/Coreball/netvissoc/blob/v1.0.0/src/commands/graph.ts)_
 
 ## `netvissoc help [COMMAND]`
 
@@ -160,7 +160,7 @@ EXAMPLE
   $ netvissoc link -i ./test -o ./test "Timothy Cavendish" "Denholme Cavendish" "brother" -u
 ```
 
-_See code: [src/commands/link.ts](https://github.com/Coreball/netvissoc/blob/v0.0.0/src/commands/link.ts)_
+_See code: [src/commands/link.ts](https://github.com/Coreball/netvissoc/blob/v1.0.0/src/commands/link.ts)_
 
 ## `netvissoc list`
 
@@ -186,7 +186,7 @@ EXAMPLE
   $ netvissoc list -i ./test -x
 ```
 
-_See code: [src/commands/list.ts](https://github.com/Coreball/netvissoc/blob/v0.0.0/src/commands/list.ts)_
+_See code: [src/commands/list.ts](https://github.com/Coreball/netvissoc/blob/v1.0.0/src/commands/list.ts)_
 
 ## `netvissoc relink FROM TO OLD [NEW]`
 
@@ -214,7 +214,7 @@ EXAMPLES
   $ netvissoc relink -i ./test -o ./test "Luisa Rey" "Rufus Sixsmith" "friend" -n "updated notes"
 ```
 
-_See code: [src/commands/relink.ts](https://github.com/Coreball/netvissoc/blob/v0.0.0/src/commands/relink.ts)_
+_See code: [src/commands/relink.ts](https://github.com/Coreball/netvissoc/blob/v1.0.0/src/commands/relink.ts)_
 
 ## `netvissoc rename OLD NEW`
 
@@ -237,7 +237,7 @@ EXAMPLE
   $ netvissoc rename -i ./test -o ./test "Sonmi" "Sonmi-451"
 ```
 
-_See code: [src/commands/rename.ts](https://github.com/Coreball/netvissoc/blob/v0.0.0/src/commands/rename.ts)_
+_See code: [src/commands/rename.ts](https://github.com/Coreball/netvissoc/blob/v1.0.0/src/commands/rename.ts)_
 
 ## `netvissoc unlink FROM TO TYPE`
 
@@ -262,5 +262,5 @@ EXAMPLE
   $ netvissoc unlink -i ./test -o ./test "Zachry" "Meronym" "enemy"
 ```
 
-_See code: [src/commands/unlink.ts](https://github.com/Coreball/netvissoc/blob/v0.0.0/src/commands/unlink.ts)_
+_See code: [src/commands/unlink.ts](https://github.com/Coreball/netvissoc/blob/v1.0.0/src/commands/unlink.ts)_
 <!-- commandsstop -->
