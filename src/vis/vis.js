@@ -97,7 +97,7 @@ fileSelect.addEventListener('change', () => loadFiles(fileSelect.files))
 // colors and widths for edges
 function updateRelationsTable(table) {
   if (Object.keys(relationsConf).length > 0) {
-    table.style.display = 'table'
+    table.classList.remove('hidden')
     while (table.rows.length > 1) {
       table.deleteRow(-1)
     }
@@ -111,14 +111,14 @@ function updateRelationsTable(table) {
       widthCell.style.color = relationsConf[relation].color
     }
   } else {
-    table.style.display = 'none'
+    table.classList.add('hidden')
   }
 }
 
 async function loadConf(conf) {
   const confText = await conf.text()
   relationsConf = JSON.parse(confText)
-  updateRelationsTable(document.querySelector('#relationsTable'))
+  updateRelationsTable(document.querySelector('.relationsTable'))
   if (people) {
     replaceEdges()
   }
@@ -191,16 +191,16 @@ function updateInfoClick(infoDiv, nodeId, edgeId) {
     currentPerson = people.find(person => person.name === nodeId)
     currentEdge = null
     updateInfoNode(infoDiv)
-    infoDiv.style.display = 'initial'
+    infoDiv.classList.remove('hidden')
   } else if (edgeId) {
     currentPerson = null
     currentEdge = edges.get(edgeId)
     updateInfoEdge(infoDiv)
-    infoDiv.style.display = 'initial'
+    infoDiv.classList.remove('hidden')
   } else {
     currentPerson = null
     currentEdge = null
-    infoDiv.style.display = 'none'
+    infoDiv.classList.add('hidden')
   }
 }
 
@@ -212,7 +212,7 @@ function updateInfoWithCurrent(infoDiv) {
   }
 }
 
-const info = document.querySelector('#info')
+const info = document.querySelector('.info')
 network.on('click', click => updateInfoClick(info, click.nodes[0], click.edges[0]))
 sortNameCheck.addEventListener('change', () => updateInfoWithCurrent(info))
 sortRelationCheck.addEventListener('change', () => updateInfoWithCurrent(info))
