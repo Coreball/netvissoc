@@ -42,7 +42,7 @@ export default abstract class Base extends Command {
   }
 
   pathName(dir: string, name: string): string {
-    return path.join(dir, name.replace(' ', '_') + '.json')
+    return path.join(dir, name.replace(/ /g, '_') + '.json')
   }
 
   areDirsSame(a: string, b: string): boolean {

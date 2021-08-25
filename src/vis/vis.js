@@ -67,8 +67,8 @@ function replaceNodes() {
 
 function replaceEdges() {
   edges.clear()
-  const edgeList = people.map(person =>
-    person.connections.map(connection =>
+  const edgeList = people.flatMap(person =>
+    person.connections.flatMap(connection =>
       connection.relations.map(relation => ({
         from: person.name,
         to: connection.name,
@@ -78,8 +78,8 @@ function replaceEdges() {
         width: relationsConf[relation.type]?.width ?? null,
         title: relation.notes,
       }))
-    ).flat()
-  ).flat()
+    )
+  )
   edges.add(doubleDirectedToUndirected(edgeList)) // perhaps make it an option
 }
 
@@ -137,15 +137,29 @@ smoothCheck.addEventListener('change', () => enableSmoothEdges(smoothCheck.check
 enableSmoothEdges(smoothCheck.checked) // for browsers that persist dynamic checked state
 
 // info box
-function updateInfoNode(infoDiv, nodeId) {
-  const person = people.find(person => person.name === nodeId)
-  infoDiv.querySelector('.name').textContent = person.name
-  infoDiv.querySelector('.notes').textContent = person.notes
+const sortNameCheck = document.querySelector('#sortNameCheck')
+const sortRelationCheck = document.querySelector('#sortRelationCheck')
+let currentPerson = null
+let currentEdge = null
+
+function updateInfoNode(infoDiv) {
+  infoDiv.querySelector('.name').textContent = currentPerson.name
+  infoDiv.querySelector('.notes').textContent = currentPerson.notes
   const connectionList = infoDiv.querySelector('.connectionList')
   while (connectionList.firstChild) {
     connectionList.removeChild(connectionList.firstChild)
   }
-  person.connections.forEach(connection => {
+
+  const personConnections = [...currentPerson.connections]
+  if (sortNameCheck.checked) {
+    personConnections.sort((a, b) => a.name.localeCompare(b.name))
+  }
+  if (sortRelationCheck.checked) {
+    personConnections.sort((a, b) =>
+      relationsConf[b.relations[0].type].width - relationsConf[a.relations[0].type].width)
+  }
+  
+  personConnections.forEach(connection => {
     const connectionItem = document.createElement('li')
     connectionItem.appendChild(document.createTextNode(connection.name))
     if (connection.relations.length > 0) {
@@ -155,6 +169,7 @@ function updateInfoNode(infoDiv, nodeId) {
         const text = relation.type + (relation.notes ? ` - ${relation.notes}` : '')
         relationItem.appendChild(document.createTextNode(text))
         relationList.appendChild(relationItem)
+        relationItem.style.color = relationsConf[relation.type].color
       })
       connectionItem.appendChild(relationList)
     }
@@ -162,27 +177,42 @@ function updateInfoNode(infoDiv, nodeId) {
   })
 }
 
-function updateInfoEdge(infoDiv, edgeId) {
-  const edge = edges.get(edgeId)
-  infoDiv.querySelector('.name').textContent = edge.type
-  infoDiv.querySelector('.notes').textContent = edge.title
+function updateInfoEdge(infoDiv) {
+  infoDiv.querySelector('.name').textContent = currentEdge.type
+  infoDiv.querySelector('.notes').textContent = currentEdge.title
   const connectionList = infoDiv.querySelector('.connectionList')
   while (connectionList.firstChild) {
     connectionList.removeChild(connectionList.firstChild)
   }
 }
 
-function updateInfo(infoDiv, nodeId, edgeId) {
+function updateInfoClick(infoDiv, nodeId, edgeId) {
   if (nodeId) {
-    updateInfoNode(infoDiv, nodeId)
+    currentPerson = people.find(person => person.name === nodeId)
+    currentEdge = null
+    updateInfoNode(infoDiv)
     infoDiv.style.display = 'initial'
   } else if (edgeId) {
-    updateInfoEdge(infoDiv, edgeId)
+    currentPerson = null
+    currentEdge = edges.get(edgeId)
+    updateInfoEdge(infoDiv)
     infoDiv.style.display = 'initial'
   } else {
+    currentPerson = null
+    currentEdge = null
     infoDiv.style.display = 'none'
   }
 }
 
+function updateInfoWithCurrent(infoDiv) {
+  if (currentPerson) {
+    updateInfoNode(infoDiv)
+  } else if (currentEdge) {
+    updateInfoEdge(infoDiv)
+  }
+}
+
 const info = document.querySelector('#info')
-network.on('click', click => updateInfo(info, click.nodes[0], click.edges[0]))
+network.on('click', click => updateInfoClick(info, click.nodes[0], click.edges[0]))
+sortNameCheck.addEventListener('change', () => updateInfoWithCurrent(info))
+sortRelationCheck.addEventListener('change', () => updateInfoWithCurrent(info))
