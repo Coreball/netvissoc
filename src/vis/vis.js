@@ -56,20 +56,25 @@ function doubleDirectedToUndirected(edgeList) {
   return newList
 }
 
-function replaceNodes() {
-  nodes.clear()
-  nodes.add(people.map(person => ({
+function peopleToNodes() {
+  return people.map(person => ({
     id: person.name,
     label: person.name,
     title: person.notes,
-  })))
+    color: null,
+  }))
 }
 
-function replaceEdges() {
-  edges.clear()
-  const edgeList = people.flatMap(person =>
+function replaceNodes() {
+  nodes.clear()
+  nodes.add(peopleToNodes())
+}
+
+function relationsToEdges() {
+  return people.flatMap(person =>
     person.connections.flatMap(connection =>
       connection.relations.map(relation => ({
+        id: person.name + connection.name + relation.type, // not bulletproof
         from: person.name,
         to: connection.name,
         arrows: 'to',
@@ -80,7 +85,11 @@ function replaceEdges() {
       }))
     )
   )
-  edges.add(doubleDirectedToUndirected(edgeList)) // perhaps make it an option
+}
+
+function replaceEdges() {
+  edges.clear()
+  edges.add(doubleDirectedToUndirected(relationsToEdges())) // perhaps make it an option
 }
 
 async function loadFiles(fileList) {
@@ -94,7 +103,7 @@ async function loadFiles(fileList) {
 const fileSelect = document.querySelector('#fileSelect')
 fileSelect.addEventListener('change', () => loadFiles(fileSelect.files))
 
-// colors and widths for edges
+// config file, colors and widths for edges
 function updateRelationsTable(table) {
   if (Object.keys(relationsConf).length > 0) {
     table.classList.remove('hidden')
@@ -158,7 +167,7 @@ function updateInfoNode(infoDiv) {
     personConnections.sort((a, b) =>
       relationsConf[b.relations[0].type].width - relationsConf[a.relations[0].type].width)
   }
-  
+
   personConnections.forEach(connection => {
     const connectionItem = document.createElement('li')
     connectionItem.appendChild(document.createTextNode(connection.name))
@@ -216,3 +225,26 @@ const info = document.querySelector('.info')
 network.on('click', click => updateInfoClick(info, click.nodes[0], click.edges[0]))
 sortNameCheck.addEventListener('change', () => updateInfoWithCurrent(info))
 sortRelationCheck.addEventListener('change', () => updateInfoWithCurrent(info))
+
+// neighborhood highlight
+let highlightActive = false
+
+function neighborhoodHighlight(nodeId) {
+  if (nodeId) {
+    highlightActive = true
+    const updatedNodes = peopleToNodes().map(
+      person => person.id === nodeId ?
+        person : { ...person, color: '#eee' })
+    const updatedEdges = relationsToEdges().map(
+      edge => edge.from === nodeId || edge.to === nodeId ?
+        edge : { ...edge, color: '#eee' })
+    nodes.update(updatedNodes)
+    edges.update(doubleDirectedToUndirected(updatedEdges))
+  } else if (highlightActive) {
+    highlightActive = false
+    nodes.update(peopleToNodes())
+    edges.update(doubleDirectedToUndirected(relationsToEdges()))
+  }
+}
+
+network.on('click', click => neighborhoodHighlight(click.nodes[0]))
